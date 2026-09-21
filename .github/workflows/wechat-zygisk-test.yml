@@ -23,7 +23,7 @@ jobs:
       - name: Assemble application dex
         run: ./gradlew clean :app:assembleRelease
       - name: Build WeChat Zygisk module
-        run: bash module/build.sh :module:assembleRelease ./src/gradle/wechat.gradle Zygisk
+        run: bash ./build.sh :module:assembleRelease ./src/gradle/wechat.gradle Zygisk
         working-directory: module
       - name: Upload flashable module
         uses: actions/upload-artifact@v4
