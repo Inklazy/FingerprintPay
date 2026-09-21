@@ -1,3 +1,6 @@
+### v6.1.1-inklazy.1 (2026-09-21)
+
+🚩 适配微信 8.0.78 (3180) 的 `WxaLiteAppPayTransparentLiteUI` LiteApp 支付容器。
 # Changelog
 ### v6.1.0 (2026-03-07)
 
