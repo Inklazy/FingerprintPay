@@ -1,0 +1,33 @@
+name: Build WeChat Zygisk test module
+
+on:
+  push:
+    branches:
+      - fix/wechat-8-0-78-liteapp
+  workflow_dispatch:
+
+jobs:
+  build-wechat-zygisk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - name: Install packaging dependency
+        run: sudo apt-get update && sudo apt-get install -y libarchive-zip-perl
+      - name: Assemble application dex
+        run: ./gradlew clean :app:assembleRelease
+      - name: Build WeChat Zygisk module
+        run: bash module/build.sh :module:assembleRelease ./src/gradle/wechat.gradle Zygisk
+        working-directory: module
+      - name: Upload flashable module
+        uses: actions/upload-artifact@v4
+        with:
+          name: FingerprintPay-WeChat-Zygisk-6.1.1-inklazy.1
+          path: module/build/release/*wechat*.zip
+          if-no-files-found: error
